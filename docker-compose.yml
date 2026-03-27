@@ -22,7 +22,7 @@ services:
     volumes:
       - ./data/redis/:/data/
   chatgpt-api-server:
-    image: xyhelper/chatgpt-api-server:latest
+    image: ghcr.io/xyhelper/chatgpt-api-server:latest
     container_name: chatgpt-api-server
     restart: always
     ports:
@@ -37,16 +37,16 @@ services:
       - ./data/chatgpt-api-server/:/app/data/
     labels:
       - "com.centurylinklabs.watchtower.scope=xyhelper-chatgpt-api-server"
-  xyhelper-web:
-    image: xyhelper/xyhelper-web
-    container_name: xyhelper-web
-    restart: always
-    ports:
-      - 8101:8080
-    environment:
-      BASE_URI: "http://chatgpt-api-server:8001"
-    labels:
-      - "com.centurylinklabs.watchtower.scope=xyhelper-chatgpt-api-server"
+  # xyhelper-web:
+  #   image: xyhelper/xyhelper-web
+  #   container_name: xyhelper-web
+  #   restart: always
+  #   ports:
+  #     - 8101:8080
+  #   environment:
+  #     BASE_URI: "http://chatgpt-api-server:8001"
+  #   labels:
+  #     - "com.centurylinklabs.watchtower.scope=xyhelper-chatgpt-api-server"
   # chat2api:
   #   image: xyhelper/chat2api
   #   ports:
@@ -57,7 +57,7 @@ services:
   #   labels:
   #     - "com.centurylinklabs.watchtower.scope=xyhelper-chatgpt-api-server"
   watchtower:
-    image: containrrr/watchtower
+    image: nickfedor/watchtower
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     command: --scope xyhelper-chatgpt-api-server --cleanup
